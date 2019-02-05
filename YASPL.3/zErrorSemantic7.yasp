@@ -1,0 +1,17 @@
+head
+
+int i;
+int j;
+double c;
+
+def test(in int ciao, out double c){
+	
+	int i;
+	j = i;
+	
+	//ciao = c;
+}
+
+start
+//non posso assegnare interi o altri tipi a una chiamata
+test(5, c);

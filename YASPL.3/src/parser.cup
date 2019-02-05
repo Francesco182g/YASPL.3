@@ -1,0 +1,393 @@
+package compilers;
+
+import java_cup.runtime.*;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import Syntax.*;
+import Lexer.*;
+
+/**
+ * Analisi Sintattica
+ * 
+ * @author Francesco Garofalo
+ *
+ */
+
+
+class Parser;
+
+/*-- DEFINITION CODE --*/
+parser code{: 
+
+	/*-- Type Def --*/
+	private String type= "";
+	
+	/*-- Definition NodeOp --*/
+	NodeOp nArgsOp = new ArgsOp("ArgsOp");
+	NodeOp nParDecls = new ParDeclOp("ParDeclsOp");
+	NodeOp nVarDecls = new VarDeclOp("VarDeclsOp");
+	NodeOp nVars = new NodeOp("VarsOp");
+	NodeOp nVarDeclsInit = new NodeOp("VarDeclsInitOp");
+	NodeOp nStatements = new NodeOp("StatementsOp");
+	NodeOp nDecls = new NodeOp("DeclsOp");
+	
+	
+	Lexer lexer;
+	public Parser(Lexer lexer){
+	    super(lexer);
+	    this.lexer = lexer;
+    }
+    :}; 
+    
+
+
+/*-- TERMINALS --*/
+
+terminal HEAD,START,SEMI,INT,BOOL,DOUBLE,STRING,CHAR,COMMA,DEF,LPAR,RPAR,LGPAR,
+				RGPAR,READ,WRITE,PLUS,MINUS,TIMES,DIV,ASSIGN,IF,THEN,
+				WHILE,DO,ELSE,GT,GE,LT,LE,EQ,NOT,AND,OR,UMINUS,IN,OUT,INOUT;
+terminal Integer ID; 			//Return id number
+terminal String INT_CONST,DOUBLE_CONST,CHAR_CONST,STRING_CONST,TRUE,FALSE;
+
+/*-- NON TERMINALS --*/
+
+non terminal ScopeNode Programma;
+non terminal Node Decls; 
+non terminal Node Statements; 
+non terminal Node Var_decl;
+non terminal Node Type;
+non terminal Node Var_decls_init;
+non terminal Node Var_init_value;
+non terminal Node Vars;
+non terminal Node Def_decl;
+non terminal Node Var_decls;
+non terminal Node Par_decls;
+non terminal Node Par_type;
+non terminal Node Body;
+non terminal Node Stat;
+non terminal Node Args;
+non terminal Node Comp_stat;
+non terminal Node Expr;
+non terminal String Arith_op;
+non terminal String Bool_op;
+non terminal String Rel_op;
+
+/*-- NON TERMINAL ADDED --*/
+non terminal NodeOp StatementsA; 
+non terminal NodeOp DeclsA;
+non terminal Node Var_decls_initA;
+non terminal Node VarsA;
+non terminal Node Var_declsA; 
+non terminal Node Par_declsA;
+non terminal Node ArgsA;
+
+/* Precedences */
+precedence left COMMA;
+precedence right ASSIGN;
+precedence left OR;
+precedence left AND;
+precedence left TIMES, DIV;
+precedence left PLUS, MINUS;
+precedence right NOT;
+precedence left GT, GE, LT, LE, EQ;
+
+
+/* GRAMMAR*/
+
+/*------ Programma ------*/
+Programma ::= HEAD DeclsA:Decls1 START StatementsA:Statments1 {: 
+RESULT = new ProgramOp("ProgramOp", Decls1, Statments1); :};						
+
+/*------ Decls A ------*/
+DeclsA ::= Decls {: nDecls.reverseList(); RESULT = nDecls; :}
+						;
+
+/*------ Decls ------*/
+Decls ::= Var_decl:VarDe Decls:decls {: 
+		nDecls.addNode(VarDe);
+		//RESULT = nDecls; 
+		:}
+	
+		|Def_decl:DefDe Decls:decls {: 
+		nDecls.addNode(DefDe);
+		//RESULT = nDecls; 
+		:}
+		
+		|/*Epsilon*/	{: 
+		//RESULT = null;
+		nDecls = new NodeOp("DeclsOp");
+		 :}
+		;
+	
+StatementsA ::= Statements {: nStatements.reverseList(); RESULT = nStatements; :} ;
+		
+/*------ Statements ------*/
+Statements ::= Stat:stat Statements:statements 
+			{: nStatements.addNode(stat);
+				//RESULT = nStatements; 
+			:}
+			|/*Epsilon*/{: 
+				//RESULT = null;
+				nStatements = new NodeOp("StatementsOp");
+			:}
+			;
+			
+/*------ Var_decl ------*/
+Var_decl ::= Type:type Var_decls_initA:VarDeIn SEMI {: RESULT = new VarDeclOp("VarDeclOp", type, VarDeIn); 
+													nVarDeclsInit = new NodeOp("VarDeclsInitOp"); :}
+;
+
+Var_decls_initA ::= Var_decls_init {: nVarDeclsInit.reverseList(); RESULT = nVarDeclsInit; :} ;
+
+
+
+/*------ Type ------*/
+Type ::= INT {: RESULT = new NodeLeaf("INT",null, "INT"); :}
+		|BOOL {: RESULT = new NodeLeaf("BOOL",null, "BOOL"); :}
+		|DOUBLE {: RESULT = new NodeLeaf("DOUBLE",null, "DOUBLE"); :}
+		|STRING {: RESULT = new NodeLeaf("STRING",null, "STRING"); :}
+		|CHAR {: RESULT = new NodeLeaf("CHAR",null, "CHAR"); :}
+		;
+		
+/*------ Var_decls_init ------*/
+Var_decls_init ::= ID:id Var_init_value:varInVa COMMA Var_decls_init:VarDeIn 
+				{: 
+				if(varInVa != null){ nVarDeclsInit.addNode(varInVa); }
+				nVarDeclsInit.addNode(new NodeLeaf("IDdecl",SymbolTable.lookup(id).value.toString(),""));
+				   //RESULT = nVarDeclsInit;
+				:}
+				
+ 				|ID:id Var_init_value:varInVa 
+ 				{: 
+ 				if(varInVa != null){ nVarDeclsInit.addNode(varInVa); }
+ 				nVarDeclsInit.addNode(new NodeLeaf("IDdecl",SymbolTable.lookup(id).value.toString(), ""));
+ 				   //RESULT = nVarDeclsInit;
+ 				:}
+ 				;
+ 				
+/*------ Var_init_value ------*/
+Var_init_value ::= ASSIGN Expr:expr {:RESULT = new VarInitValueOp("VarInitValueOp", new NodeOp("AssignVal"), expr ); :}  
+				|/*Epsilon*/ {:RESULT = null; :}  
+				;
+
+/*------ VarsA ------*/	
+VarsA ::= Vars {: nVars.reverseList(); RESULT = nVars; :} ;
+
+/*------ Vars ------*/			
+Vars ::= ID:id COMMA Vars:vars {:
+			nVars.addNode(new NodeLeaf("ID",SymbolTable.lookup(id).value.toString(), ""));
+			//RESULT = nVars;
+			:}
+ 		
+ 		|ID:id {: nVars.addNode(new NodeLeaf("ID",SymbolTable.lookup(id).value.toString(), ""));
+ 				//RESULT = nVars;
+ 		:} 
+ 		;
+ 		
+/*------ Def_decl ------*/	
+Def_decl ::= DEF ID:id LPAR Par_declsA:parDecls RPAR Body:body {:RESULT = new NodeOp("DefDeclsOp", new NodeLeaf("IDdefdecl",SymbolTable.lookup(id).value.toString(), ""), parDecls, body); 			
+															nParDecls = new ParDeclOp("ParDeclsOp");
+															 :}
+			|DEF ID:id LPAR RPAR Body:body {:RESULT = new NodeOp("DefDeclsOp", new NodeLeaf("IDdefdecl",SymbolTable.lookup(id).value.toString(), ""), body);:}
+			;
+			
+/*------ Var_declsA ------*/	
+Var_declsA ::= Var_decls {: nVarDecls.reverseList(); RESULT=nVarDecls; :} ;
+
+/*------ Var_decls ------*/	
+Var_decls ::= Var_decl:varDecl Var_decls:varDecls {:
+				nVarDecls.addNode(varDecl);
+				//RESULT = nVarDecls;
+				:}
+				
+			|/*epsilon*/ {: //RESULT = null; 
+			nVarDecls = new NodeOp("VarDeclsOp"); :}
+			;
+	
+/*------ Par_declsA ------*/						
+Par_declsA ::= Par_decls {: nParDecls.reverseList(); RESULT=nParDecls; :} ;
+
+/*------ Par_decls ------*/			
+Par_decls ::= Par_type:pType Type:type ID:id COMMA Par_decls:pDecls {: 
+			nParDecls.addNode(new NodeLeaf("IDpardecl",SymbolTable.lookup(id).value.toString(), ""));
+			nParDecls.addNode(type);
+			nParDecls.addNode(pType);
+			//RESULT = nParDecls;
+			:}
+			
+			|Par_type:pType Type:type ID:id {:
+			nParDecls.addNode(new NodeLeaf("IDpardecl",SymbolTable.lookup(id).value.toString(), ""));
+			nParDecls.addNode(type);
+			nParDecls.addNode(pType);
+			//RESULT = nParDecls;
+			:}
+			;
+
+/*------ Par_type ------*/	
+Par_type ::= IN {: RESULT = new NodeLeaf("IN",null,"IN"); :}
+			|OUT {: RESULT = new NodeLeaf("OUT",null,"OUT"); :}
+			|INOUT {: RESULT = new NodeLeaf("INOUT",null,"INOUT"); :}
+			;
+
+/*------ Body ------*/	
+Body ::= LGPAR Var_declsA:varDecls StatementsA:statements RGPAR  {: RESULT = new BodyOp("BodyOp", varDecls, statements); :} ;
+
+
+/*------ Stat ------*/	
+Stat ::= VarsA:var READ SEMI {: RESULT = new ReadOp("ReadOp", var); 
+								nVars = new VarsOp("VarsOp"); 
+							 :}
+ 		|ArgsA:args WRITE SEMI {: RESULT = new WriteOp("WriteOp", args);		
+ 								nArgsOp = new ArgsOp("ArgsOp");
+ 							   :} 
+ 		|ID:id ASSIGN Expr:expr SEMI {: RESULT = new AssignOp("AssignOp", new NodeLeaf("IDop",SymbolTable.lookup(id).value.toString(), ""), expr);  :}
+ 		|ID:id LPAR ArgsA:args RPAR SEMI {: RESULT = new CallOp("CallOp", new NodeLeaf("ID",SymbolTable.lookup(id).value.toString(), ""), args); 
+ 										nArgsOp = new ArgsOp("ArgsOp");
+ 										 :}
+ 		|ID:id LPAR RPAR SEMI {:RESULT = new CallOp("CallOp", new NodeLeaf("ID",SymbolTable.lookup(id).value.toString(), ""));  :}
+		|IF LPAR Expr:expr RPAR THEN Comp_stat:comps1 ELSE Comp_stat:comps2 {: RESULT = new IfThenElseOp("IfThenElseOp", expr, comps1, comps2); :}
+ 		|IF LPAR Expr:expr RPAR THEN Comp_stat:comps {: RESULT = new IfThenOp("IfThenOp", expr, comps); :}
+ 		|WHILE LPAR Expr:expr RPAR DO Comp_stat:comps {: RESULT = new WhileOp("WhileOp", expr, comps); :}
+ 		;
+
+
+ArgsA ::= Args {: nArgsOp.reverseList(); RESULT=nArgsOp; :} ;
+
+/*------ Args ------*/
+Args ::= Expr:ExprAr COMMA Args:Args1 {:
+  	 
+										nArgsOp.addNode(ExprAr);
+										//RESULT = nArgsOp;
+									:}
+																				
+		|Expr:ExprAr {: 	
+							nArgsOp.addNode(ExprAr);
+							//RESULT = nArgsOp;
+					 :} 
+					; 
+		
+/*------ Comp_stat ------*/	
+Comp_stat ::= LGPAR StatementsA:Stmts RGPAR {: RESULT = new NodeOp("CompStatOp", Stmts); 
+											 //System.out.println("CompStatOP " +Stmts);
+											 :} 
+											 ;
+											 
+/*------ Expr ------*/	
+Expr ::= Expr:ExprA1 Arith_op:ArOp Expr:ExprA2 {: switch(ArOp){
+													case "PLUS": RESULT = new MathOp("PlusOp", ExprA1, ExprA2);
+														//System.out.println("Arit " +ExprA1+ " " + ExprA2);
+														break;
+													case "MINUS": RESULT = new MathOp("DiffOp", ExprA1, ExprA2);
+														//System.out.println("Arit " +ExprA1+ " " + ExprA2);
+														break;
+													case "TIMES": RESULT = new MathOp("TimesOp", ExprA1, ExprA2);
+														//System.out.println("Arit " +ExprA1+ " " + ExprA2);
+														break;
+													case "DIV": RESULT = new MathOp("DivOp", ExprA1, ExprA2);
+														//System.out.println("Arit " +ExprA1+ " " + ExprA2);
+														break;
+														}
+													:}	
+													 	
+													 								
+		|Expr:ExprB1 Bool_op:BlOp Expr:ExprB2 {: switch(BlOp){
+													case "AND": RESULT = new MathOp("AndOp", ExprB1, ExprB2);
+														//System.out.println("Bool " +ExprB1+ " " + ExprB2);
+														break;
+													case "OR": RESULT = new MathOp("OrOp", ExprB1, ExprB2);
+														//System.out.println("Bool " +ExprB1+ " " + ExprB2);
+														break;
+														}
+													:}
+													
+													
+		|Expr:ExprR1 Rel_op:RlOp Expr:ExprR2  {: switch(RlOp){
+													case "GT": RESULT = new MathOp("GTOp", ExprR1, ExprR2);
+														//System.out.println("Relop " +ExprR1+ " " + ExprR2);
+														break;
+													case "GE": RESULT = new MathOp("GEOp", ExprR1, ExprR2);
+														//System.out.println("Relop " +ExprR1+ " " + ExprR2);
+														break;
+													case "LT": RESULT = new MathOp("LTOp", ExprR1, ExprR2);
+														//System.out.println("Relop " +ExprR1+ " " + ExprR2);
+														break;	
+													case "LE": RESULT = new MathOp("LEOp", ExprR1, ExprR2);
+														//System.out.println("Relop " +ExprR1+ " " + ExprR2);
+														break;														
+													case "EQ": RESULT = new MathOp("EQOp", ExprR1, ExprR2);
+														//System.out.println("Relop " +ExprR1+ " " + ExprR2);
+														break;
+														};
+																									
+												 :} %prec AND | OR
+													 
+													
+													
+		|MINUS Expr:ExprM {: RESULT = new UnaryOp("MinusOP", ExprM);
+							//System.out.println("MinOP: " +ExprM); 
+							:} %prec UMINUS
+							
+		|NOT Expr:ExprN {: RESULT = new UnaryOp("NotOP", ExprN);
+							//System.out.println("NotOP: " +ExprN); 
+							:}
+							
+		|LPAR Expr:ExprLR RPAR {: RESULT = ExprLR;
+							//System.out.println("ExprLR : " +ExprLR); :}
+							
+		|TRUE {: RESULT = new NodeLeaf("BOOL_CONST","TRUE", "BOOL_CONST"); 
+							//System.out.println("True");
+				 :}
+		
+		|FALSE {: RESULT = new NodeLeaf("BOOL_CONST","FALSE", "BOOL_CONST"); 
+							//System.out.println("False");
+		 		:}
+		 				
+		|ID:id {: RESULT = new NodeLeaf("IDop",SymbolTable.lookup(id).value.toString(), ""); 
+					//System.out.println("ID : " +SymbolTable.lookup(id).value.toString() + "  NumeroID:" +id ); 
+					:}
+		
+		|INT_CONST:iConst {: RESULT = new NodeLeaf("INT_CONST",iConst, "INT_CONST"); 
+						//System.out.println("INT_CONST : " +iConst); 
+						:}
+		
+		|DOUBLE_CONST:dConst {: RESULT = new NodeLeaf("DOUBLE_CONST",dConst, "DOUBLE_CONST"); 
+							//System.out.println("INT_CONST : " +dConst); 
+							:}
+	
+		|STRING_CONST:sConst {: RESULT = new NodeLeaf("STRING_CONST",sConst, "STRING_CONST"); 
+							//System.out.println("INT_CONST : " +sConst); 
+							:}
+	
+		|CHAR_CONST:cConst {: RESULT = new NodeLeaf("CHAR_CONST",cConst, "CHAR_CONST"); 
+							//System.out.println("char_CONST : " +cConst); 
+							:}
+
+		;
+		
+		
+/*------ Arith_op ------*/	
+Arith_op ::= PLUS {: RESULT = "PLUS"; :}
+		|MINUS {:RESULT = "MINUS"; :}
+		|TIMES {:RESULT = "TIMES"; :}
+		|DIV {:RESULT = "DIV"; :}
+		;
+
+
+/*------ Bool_op ------*/	
+Bool_op ::= AND {: RESULT = "AND"; :}
+ 		|OR {: RESULT = "OR"; :}
+ 		;
+
+
+/*------ Rel_op ------*/	
+Rel_op ::= GT {: RESULT = "GT"; :}
+		|GE {: RESULT = "GE"; :}
+		|LT {: RESULT = "LT"; :}
+		|LE {: RESULT = "LE"; :}
+		|EQ {: RESULT = "EQ"; :}
+		;   
+		   

@@ -1,0 +1,11 @@
+head
+
+double c;
+string v;
+
+
+start
+
+if(c<v)then{
+	
+}

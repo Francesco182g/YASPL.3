@@ -1,0 +1,15 @@
+head
+
+double d;
+
+def Ciao(){
+	int i = 0;
+	int v = 2;
+	
+	double double c;
+}
+
+start
+
+Ciao();
+Ciao();

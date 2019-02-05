@@ -1,0 +1,666 @@
+<ProgramOp>
+<DeclsOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='op1'/>
+<IDdecl attr='op2'/>
+</VarDeclsInitOp>
+</VarDeclOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='res'/>
+</VarDeclsInitOp>
+</VarDeclOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='op'/>
+</VarDeclsInitOp>
+</VarDeclOp>
+<DefDeclsOp>
+<IDdefdecl attr='somma'/>
+<ParDeclsOp>
+<IN/>
+<INT/>
+<IDpardecl attr='op1'/>
+<IN/>
+<INT/>
+<IDpardecl attr='op2'/>
+<OUT/>
+<INT/>
+<IDpardecl attr='res'/>
+</ParDeclsOp>
+<BodyOp>
+<VarDeclsOp>
+</VarDeclsOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='res'/>
+<PlusOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+</PlusOp>
+</AssignOp>
+</StatementsOp>
+</BodyOp>
+</DefDeclsOp>
+<DefDeclsOp>
+<IDdefdecl attr='sub'/>
+<ParDeclsOp>
+<IN/>
+<INT/>
+<IDpardecl attr='op1'/>
+<IN/>
+<INT/>
+<IDpardecl attr='op2'/>
+<OUT/>
+<INT/>
+<IDpardecl attr='res'/>
+</ParDeclsOp>
+<BodyOp>
+<VarDeclsOp>
+</VarDeclsOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='res'/>
+<DiffOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+</DiffOp>
+</AssignOp>
+</StatementsOp>
+</BodyOp>
+</DefDeclsOp>
+<DefDeclsOp>
+<IDdefdecl attr='mul'/>
+<ParDeclsOp>
+<IN/>
+<INT/>
+<IDpardecl attr='op1'/>
+<IN/>
+<INT/>
+<IDpardecl attr='op2'/>
+<OUT/>
+<INT/>
+<IDpardecl attr='res'/>
+</ParDeclsOp>
+<BodyOp>
+<VarDeclsOp>
+</VarDeclsOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='res'/>
+<TimesOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+</TimesOp>
+</AssignOp>
+</StatementsOp>
+</BodyOp>
+</DefDeclsOp>
+<DefDeclsOp>
+<IDdefdecl attr='mulSom'/>
+<ParDeclsOp>
+<IN/>
+<INT/>
+<IDpardecl attr='op1'/>
+<IN/>
+<INT/>
+<IDpardecl attr='op2'/>
+<OUT/>
+<INT/>
+<IDpardecl attr='res'/>
+</ParDeclsOp>
+<BodyOp>
+<VarDeclsOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='i'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<DOUBLE_CONST attr='0.0'/>
+</VarInitValueOp>
+</VarDeclsInitOp>
+</VarDeclOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='risultato'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='0'/>
+</VarInitValueOp>
+</VarDeclsInitOp>
+</VarDeclOp>
+</VarDeclsOp>
+<StatementsOp>
+<IfThenOp>
+<OrOp>
+<EQOp>
+<IDop attr='op2'/>
+<INT_CONST attr='0'/>
+</EQOp>
+<EQOp>
+<IDop attr='op1'/>
+<INT_CONST attr='0'/>
+</EQOp>
+</OrOp>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='risultato'/>
+<INT_CONST attr='0'/>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<WhileOp>
+<LTOp>
+<IDop attr='i'/>
+<IDop attr='op2'/>
+</LTOp>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='risultato'/>
+<PlusOp>
+<IDop attr='risultato'/>
+<IDop attr='op1'/>
+</PlusOp>
+</AssignOp>
+<AssignOp>
+<IDop attr='i'/>
+<PlusOp>
+<IDop attr='i'/>
+<INT_CONST attr='1'/>
+</PlusOp>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+</WhileOp>
+<AssignOp>
+<IDop attr='res'/>
+<IDop attr='risultato'/>
+</AssignOp>
+</StatementsOp>
+</BodyOp>
+</DefDeclsOp>
+<DefDeclsOp>
+<IDdefdecl attr='divi'/>
+<ParDeclsOp>
+<IN/>
+<INT/>
+<IDpardecl attr='op1'/>
+<IN/>
+<INT/>
+<IDpardecl attr='op2'/>
+<OUT/>
+<INT/>
+<IDpardecl attr='res'/>
+</ParDeclsOp>
+<BodyOp>
+<VarDeclsOp>
+</VarDeclsOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='res'/>
+<DivOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+</DivOp>
+</AssignOp>
+</StatementsOp>
+</BodyOp>
+</DefDeclsOp>
+<DefDeclsOp>
+<IDdefdecl attr='elpot'/>
+<ParDeclsOp>
+<IN/>
+<INT/>
+<IDpardecl attr='op1'/>
+<IN/>
+<INT/>
+<IDpardecl attr='op2'/>
+<OUT/>
+<INT/>
+<IDpardecl attr='res'/>
+</ParDeclsOp>
+<BodyOp>
+<VarDeclsOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='i'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='0'/>
+</VarInitValueOp>
+</VarDeclsInitOp>
+</VarDeclOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='risu'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='1'/>
+</VarInitValueOp>
+</VarDeclsInitOp>
+</VarDeclOp>
+</VarDeclsOp>
+<StatementsOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op2'/>
+<INT_CONST attr='0'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='res'/>
+<INT_CONST attr='0'/>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op2'/>
+<INT_CONST attr='1'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='res'/>
+<IDop attr='op1'/>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenOp>
+<GTOp>
+<IDop attr='op2'/>
+<INT_CONST attr='1'/>
+</GTOp>
+<CompStatOp>
+<StatementsOp>
+<WhileOp>
+<NotOP>
+<EQOp>
+<IDop attr='i'/>
+<IDop attr='op2'/>
+</EQOp>
+</NotOP>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='risu'/>
+<TimesOp>
+<IDop attr='risu'/>
+<IDop attr='op1'/>
+</TimesOp>
+</AssignOp>
+<AssignOp>
+<IDop attr='i'/>
+<PlusOp>
+<IDop attr='i'/>
+<INT_CONST attr='1'/>
+</PlusOp>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+</WhileOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<AssignOp>
+<IDop attr='res'/>
+<IDop attr='risu'/>
+</AssignOp>
+</StatementsOp>
+</BodyOp>
+</DefDeclsOp>
+<DefDeclsOp>
+<IDdefdecl attr='fibit'/>
+<ParDeclsOp>
+<IN/>
+<INT/>
+<IDpardecl attr='n'/>
+<OUT/>
+<INT/>
+<IDpardecl attr='res'/>
+</ParDeclsOp>
+<BodyOp>
+<VarDeclsOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='i'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='1'/>
+</VarInitValueOp>
+</VarDeclsInitOp>
+</VarDeclOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='risultato'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='1'/>
+</VarInitValueOp>
+</VarDeclsInitOp>
+</VarDeclOp>
+<VarDeclOp>
+<INT/>
+<VarDeclsInitOp>
+<IDdecl attr='x'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='0'/>
+</VarInitValueOp>
+<IDdecl attr='y'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='1'/>
+</VarInitValueOp>
+<IDdecl attr='z'/>
+<VarInitValueOp>
+<AssignVal>
+</AssignVal>
+<INT_CONST attr='1'/>
+</VarInitValueOp>
+</VarDeclsInitOp>
+</VarDeclOp>
+</VarDeclsOp>
+<StatementsOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='n'/>
+<INT_CONST attr='0'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='risultato'/>
+<INT_CONST attr='0'/>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenElseOp>
+<EQOp>
+<IDop attr='n'/>
+<INT_CONST attr='1'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='risultato'/>
+<INT_CONST attr='1'/>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='x'/>
+<IDop attr='n'/>
+</AssignOp>
+<WhileOp>
+<NotOP>
+<EQOp>
+<IDop attr='i'/>
+<IDop attr='n'/>
+</EQOp>
+</NotOP>
+<CompStatOp>
+<StatementsOp>
+<AssignOp>
+<IDop attr='x'/>
+<IDop attr='y'/>
+</AssignOp>
+<AssignOp>
+<IDop attr='y'/>
+<IDop attr='z'/>
+</AssignOp>
+<AssignOp>
+<IDop attr='z'/>
+<PlusOp>
+<IDop attr='x'/>
+<IDop attr='y'/>
+</PlusOp>
+</AssignOp>
+<AssignOp>
+<IDop attr='risultato'/>
+<IDop attr='z'/>
+</AssignOp>
+<AssignOp>
+<IDop attr='i'/>
+<PlusOp>
+<IDop attr='i'/>
+<INT_CONST attr='1'/>
+</PlusOp>
+</AssignOp>
+</StatementsOp>
+</CompStatOp>
+</WhileOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenElseOp>
+<AssignOp>
+<IDop attr='res'/>
+<IDop attr='risultato'/>
+</AssignOp>
+</StatementsOp>
+</BodyOp>
+</DefDeclsOp>
+</DeclsOp>
+<StatementsOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Inserisici il tipo di operazione: 1:Add 2:Sub 3:Mult 4:Div 5:Pot 6:Fib '/>
+</ArgsOp>
+</WriteOp>
+<ReadOp>
+<VarsOp>
+<ID attr='op'/>
+</VarsOp>
+</ReadOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op'/>
+<INT_CONST attr='1'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Inserisci il primo operatore e il secondo: '/>
+</ArgsOp>
+</WriteOp>
+<ReadOp>
+<VarsOp>
+<ID attr='op1'/>
+<ID attr='op2'/>
+</VarsOp>
+</ReadOp>
+<CallOp>
+<ID attr='somma'/>
+<ArgsOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+<IDop attr='res'/>
+</ArgsOp>
+</CallOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op'/>
+<INT_CONST attr='2'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Inserisci il primo operatore e il secondo: '/>
+</ArgsOp>
+</WriteOp>
+<ReadOp>
+<VarsOp>
+<ID attr='op1'/>
+<ID attr='op2'/>
+</VarsOp>
+</ReadOp>
+<CallOp>
+<ID attr='sub'/>
+<ArgsOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+<IDop attr='res'/>
+</ArgsOp>
+</CallOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op'/>
+<INT_CONST attr='3'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Inserisci il primo operatore e il secondo: '/>
+</ArgsOp>
+</WriteOp>
+<ReadOp>
+<VarsOp>
+<ID attr='op1'/>
+<ID attr='op2'/>
+</VarsOp>
+</ReadOp>
+<CallOp>
+<ID attr='mulSom'/>
+<ArgsOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+<IDop attr='res'/>
+</ArgsOp>
+</CallOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op'/>
+<INT_CONST attr='4'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Inserisci il primo operatore e il secondo: '/>
+</ArgsOp>
+</WriteOp>
+<ReadOp>
+<VarsOp>
+<ID attr='op1'/>
+<ID attr='op2'/>
+</VarsOp>
+</ReadOp>
+<CallOp>
+<ID attr='divi'/>
+<ArgsOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+<IDop attr='res'/>
+</ArgsOp>
+</CallOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op'/>
+<INT_CONST attr='5'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Inserisci il primo operatore e il secondo: '/>
+</ArgsOp>
+</WriteOp>
+<ReadOp>
+<VarsOp>
+<ID attr='op1'/>
+<ID attr='op2'/>
+</VarsOp>
+</ReadOp>
+<CallOp>
+<ID attr='elpot'/>
+<ArgsOp>
+<IDop attr='op1'/>
+<IDop attr='op2'/>
+<IDop attr='res'/>
+</ArgsOp>
+</CallOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<IfThenOp>
+<EQOp>
+<IDop attr='op'/>
+<INT_CONST attr='6'/>
+</EQOp>
+<CompStatOp>
+<StatementsOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Inserisci il valore n di fibonacci: '/>
+</ArgsOp>
+</WriteOp>
+<ReadOp>
+<VarsOp>
+<ID attr='op1'/>
+</VarsOp>
+</ReadOp>
+<CallOp>
+<ID attr='fibit'/>
+<ArgsOp>
+<IDop attr='op1'/>
+<IDop attr='res'/>
+</ArgsOp>
+</CallOp>
+</StatementsOp>
+</CompStatOp>
+</IfThenOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Stampo il risultato: '/>
+<IDop attr='res'/>
+</ArgsOp>
+</WriteOp>
+<WriteOp>
+<ArgsOp>
+<STRING_CONST attr='Ciao'/>
+</ArgsOp>
+</WriteOp>
+</StatementsOp>
+</ProgramOp>

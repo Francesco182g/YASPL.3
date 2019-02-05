@@ -1,0 +1,5 @@
+//Errore lessicale poiché manca la chiusura della string_const
+
+head
+start
+"ciao->;
